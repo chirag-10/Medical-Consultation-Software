@@ -1,0 +1,18 @@
+<%- include('../partials/header.ejs')  %>
+
+	<div class="container">
+		<header class="jumbotron">
+			<div class="container">
+				<h1> Welcome to SHCS </h1>
+			</div>
+		</header>
+		
+		<div class="row text-center" style="display:flex; flex:wrap; ">
+			<% patients.forEach(function(patient){ %>
+				<%= patient.name %>
+				<%= patient.age %>
+				<%= patient.gender %>
+			<% });%>
+		</div>
+	</div>
+<%- include('../partials/footer.ejs') %>
