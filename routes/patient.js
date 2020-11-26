@@ -6,13 +6,13 @@ var express 	= require("express"),
 	
 	
 //show Patient Dashboard
-router.get("/", function(req,res){
-	Patient.find({}, function(err, allPatients) {
+router.get("/", middleware.isLoggedIn, function(req,res){
+	Patient.findOne({'email' : req.user.username}, function(err, allPatients) {
 		if(err){
 			console.log(err);
 		}
 		else{
-			res.render("./patient/index",{patients:allPatients});
+			res.render("./patient/index",{patient:allPatients, user:req});
 		}
 	});
 });
@@ -24,7 +24,7 @@ router.get("/:id", function(req,res){
 			console.log(err);
 		}
 		else{
-			res.render("./patients/show" ,{patient:patient});
+			res.render("./patient/show" ,{patient:patient});
 		}
 	});
 });

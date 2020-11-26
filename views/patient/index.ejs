@@ -8,11 +8,14 @@
 		</header>
 		
 		<div class="row text-center" style="display:flex; flex:wrap; ">
-			<% patients.forEach(function(patient){ %>
-				<%= patient.name %>
-				<%= patient.age %>
-				<%= patient.gender %>
-			<% });%>
+
+				<%= patient.name %></br>
+				<%= patient.age %></br>
+				<%= patient.gender %></br>
+				<%= patient._id %></br>
 		</div>
+		<a href="/patient/<%= patient._id %>"> Medical History </a></br>
+		<a href="/patient/<%= patient._id %>/edit">Edit Profile</a>
+		
 	</div>
 <%- include('../partials/footer.ejs') %>

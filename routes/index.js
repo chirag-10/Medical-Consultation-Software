@@ -13,14 +13,7 @@ router.get('/', function(req,res){
 });
 
 router.get('/index', middleware.isLoggedIn, function(req,res){
-	Patient.find({}, function(err, allPatients) {
-		if(err){
-			console.log(err);
-		}
-		else{
-			res.render("./patient/index",{patients:allPatients});
-		}
-	});
+	res.redirect("/patient")
 });
 
 router.get('/admin', middleware.isLoggedIn, middleware.isAdmin, function(req,res){
@@ -36,25 +29,26 @@ router.get("/register", function(req, res){
 });
 
 router.post("/register", function(req, res){
-	var newUser = new User({username : req.body.email, role:1})
+	var newPatient = new Patient({name:req.body.name, age:req.body.age, gender:req.body.gender, email:req.body.email}) ;
+	newPatient.save();
+	var newUser = new User({name : req.body.name, username : req.body.email, role:1});
 	
 	
 	User.register(newUser, req.body.password, function(err, user){
 		if(err){
 			console.log(err.message);
 			req.flash('error', err.message);
-			 res.redirect("/register");
+			return res.redirect("/register");
 		}
-		Patient.create({name:req.body.name, age:req.body.age, gender:req.body.gender , user:user._id});
-
-		passport.authenticate("local")(req,res,function(){
-			return res.redirect("/index");
-		});
 	});
-	
-	
+	/*passport.authenticate("local")(req,res,function(){
+		res.redirect("/index");
+	});	*/
+	res.redirect("/login")
 	
 });
+
+
 
 //Login
 
@@ -67,13 +61,13 @@ router.post("/login", passport.authenticate("local",
 		successRedirect : '/index',
 		failureRedirect : '/login'
 	}) , function(req, res){	
-	res.redirect("/index")
+	return res.redirect("/index");
 });
 
 router.get("/logout",function(req,res){
 	req.logout();
 	req.flash("success","Logged OUT");
-	res.redirect("/");
+	return res.redirect("/");
 });
 
 module.exports = router;

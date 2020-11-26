@@ -4,11 +4,22 @@ var mongoose 				= require("mongoose"),
 mongoose.connect("mongodb://localhost/SHCS");
 
 var UserSchema = new mongoose.Schema({
-	username : 'String',
+	name: {
+		type: String,
+		required: true
+	  },
+	username: {
+		type: String,
+		required: true,
+		unique: true
+	  },
+	password: {
+		type: String
+	  },
 	role	 : 'Number',
-	password : 'String',
 
 });
+
 
 UserSchema.plugin(passportLocalMongoose);
 

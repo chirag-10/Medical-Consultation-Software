@@ -3,11 +3,9 @@ var express   		= require("express"),
 	path			= require("path"),
 	passport  		= require("passport"),
 	LocalStrategy	= require("passport-local"),
-	mongoose		= require("mongoose"),
 	bodyParser		= require("body-parser"),
 	User			= require("./models/user"),
 	flash			= require("connect-flash"),
-	middleware		= require("./middleware"),
 	methodOverride	= require("method-override"),
 	favicon 		= require("serve-favicon")
 	
@@ -46,6 +44,7 @@ app.use(function(req,res,next){
 
 app.use("/patient",patientRoutes);
 app.use("/", indexRoutes);
+
 
 
 
