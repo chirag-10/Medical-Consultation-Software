@@ -1,0 +1,19 @@
+<%- include('../partials/header.ejs')  %>
+
+	<div class="container">
+		<header class="jumbotron">
+			<div class="container">
+				<h1> Welcome to SHCS </h1>
+			</div>
+		</header>
+		
+		<div class="row text-center" style="display:flex; flex:wrap; ">
+
+				<%= patient.name %></br>
+				<%= patient._id %></br>
+		</div>
+		<a href="/patient/<%= patient._id %>"> Medical History </a></br>
+		<a href="/patient/<%= patient._id %>/edit">Edit Profile</a>
+		
+	</div>
+<%- include('../partials/footer.ejs') %>
