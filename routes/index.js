@@ -16,10 +16,6 @@ router.get('/index', middleware.isLoggedIn, function(req,res){
 	res.redirect("/patient")
 });
 
-router.get('/admin', middleware.isLoggedIn, middleware.isAdmin, function(req,res){
-	res.render("admin");
-});
-
 
 // Auth Routes
 
@@ -31,7 +27,7 @@ router.get("/register", function(req, res){
 router.post("/register", function(req, res){
 	var newPatient = new Patient({name:req.body.name, email:req.body.email}) ;
 	newPatient.save();
-	var newUser = new User({name : req.body.name, username : req.body.email, role:1});
+	var newUser = new User({name : req.body.name, username : req.body.email, role:0});
 	
 	
 	User.register(newUser, req.body.password, function(err, user){
