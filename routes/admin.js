@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 var   generator  = require('generate-password');
 var   middleware = require("../middleware");
 
-router.get('/addDoc', middleware.isAdmin ,(req, res) => res.render("addDoctor"));
+router.get('/addDoc',  middleware.isAdmin ,(req, res) => res.render("addDoctor"));
 
 router.post('/addDoc', middleware.isAdmin, (req,res,next)=>{
     const { name, email, address, phone, degree, remark } = req.body;

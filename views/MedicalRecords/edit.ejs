@@ -2,11 +2,11 @@
 
 <div class="container">
     <div class="row">
-        <h1 style="text-align: center">Add new Medical Record !!</h1>
+        <h1 style="text-align: center">Update Medical Record !!</h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/patient/<%= patient._id %>" method="POST">
+            <form action="/patient/<%= patient_id %>/medicalRecords/<%= record._id %>?_method=PUT"  method="POST">
                 <div class="form-group">
-                    Age : <input class="form-control" type="number" name="medRec[age]" placeholder="Age">
+                    Age : <input class="form-control" type="number" name="medRec[age]" placeholder="Age" value="<%= record.age %>">
                 </div>
                 <label>Select Gender </label>
                 <div class = "form-check">
@@ -22,19 +22,19 @@
 					</label>
 				</div>
                 <div class="form-group">
-                    Blood Group : <input class="form-control" type="text" name="medRec[blood_group]" placeholder="Blood Group">
+                    Blood Group : <input class="form-control" type="text" name="medRec[blood_group]" placeholder="Blood Group" value="<%= record.blood_group %>">
                 </div>
                 <div class="form-group">
-                    Height      : <input class="form-control" type="number" name="medRec[height]" placeholder="height">
+                    Height      : <input class="form-control" type="number" name="medRec[height]" placeholder="height" value="<%= record.height %>">
                 </div>
                 <div class="form-group">
-                    Weight      : <input class="form-control" type="number" name="medRec[weight]" placeholder="weight">
+                    Weight      : <input class="form-control" type="number" name="medRec[weight]" placeholder="weight" value="<%= record.weight %>">
                 </div>
                 <div class="form-group">
-                    Sugar Level :<input class="form-control" type="number" name="medRec[sugar]" placeholder="Sugar Level">
+                    Sugar Level :<input class="form-control" type="number" name="medRec[sugar]" placeholder="Sugar Level" value="<%= record.sugar %>">
                 </div>
                 <div class="form-group">
-                    BP Level :<input class="form-control" type="number" name="medRec[bp]" placeholder="BP Level">
+                    BP Level :<input class="form-control" type="number" name="medRec[bp]" placeholder="BP Level" value="<%= record.bp %>">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Submit !</button>

@@ -5,9 +5,12 @@
             <h1> Welcome to SHCS </h1>
         </div>
         <% if(!patient.medical_record){ %>
-            <a class="btn btn-sm btn-primary" href="/patient/<%= patient._id %>/new">Add Medical Record</a> 
+            <a class="btn btn-sm btn-primary" href="/patient/<%= patient._id %>/MedicalRecords/new">Add Medical Record</a> 
         <% } else { %>
-            <a class="btn btn-sm btn-warning" href="/patient/<%= patient._id %>/edit">Update Record</a>
+            <a class="btn btn-sm btn-warning" href="/patient/<%= patient._id %>/MedicalRecords/<%= patient.medical_record._id %>/edit">Update Record</a></nr>
+            <form id="delete-form" action="/patient/<%= patient._id %>/MedicalRecords/<%= patient.medical_record._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-sm btn-danger">Delete Record</button>
+            </form>
         <% } %>
     </header>
 </div>
