@@ -13,8 +13,17 @@ var express   		= require("express"),
 //Requiring Routes
 var patientRoutes 	= require("./routes/patient");
 var indexRoutes		= require("./routes/index");
-
-mongoose.connect("mongodb://localhost/SHCS");
+var adminRoutes     = require("./routes/admin");
+var db              = require("./config/keys").mongoURI;
+mongoose
+  .connect(
+    db,
+    { useNewUrlParser: true ,useUnifiedTopology: true, useCreateIndex: true}
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
+  mongoose.Promise = global.Promise;
+  mongoose.set('useFindAndModify', false);
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
@@ -22,6 +31,7 @@ app.use(methodOverride("_method"));
 app.use(express.static(__dirname + "/public"));
 app.use(flash());
 app.use(favicon(path.join(__dirname,'public','favicon.ico')));
+
 
 
 //Passport Config
@@ -43,15 +53,12 @@ app.use(function(req,res,next){
 	res.locals.success		= req.flash.success;
 	next();
 });
-
-app.use("/patient",patientRoutes);
 app.use("/", indexRoutes);
-
-
-
+app.use("/patient",patientRoutes);
+app.use('/admin', adminRoutes);
 
 
 
 app.listen(5000, function(){
-	console.log("Starting Server at http://localhost:5000")
+	console.log("Starting Server")
 });
