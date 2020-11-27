@@ -17,5 +17,11 @@ middleware.isAdmin = function(req, res, next){
 	}
 	return next();
 }
-
+middleware.isDoctor = function(req, res, next){
+	if (req.user.role !== 2){
+		req.flash('error','You dont have permissions to do it');
+		return res.redirect("/index");
+	}
+	return next();
+}
 module.exports = middleware

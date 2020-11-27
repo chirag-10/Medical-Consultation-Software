@@ -9,7 +9,7 @@ var   middleware = require("../middleware");
 
 router.get('/addDoc', middleware.isAdmin ,(req, res) => res.render("addDoctor"));
 
-router.post('/addDoc', (req,res,next)=>{
+router.post('/addDoc', middleware.isAdmin, (req,res,next)=>{
     const { name, email, address, phone, degree, remark } = req.body;
     Doctor.find({ email: req.body.email })
     .exec()
@@ -58,8 +58,8 @@ function sendMail(sub, msg, tomail){
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "motu8034@gmail.com",
-      pass: "7066892046"  
+      user: "smarthealthconsulting24.7@gmail.com",
+      pass: "teproject123"  
     }
   });
   
