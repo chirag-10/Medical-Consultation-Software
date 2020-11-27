@@ -57,6 +57,7 @@ router.put("/:record_id", middleware.isLoggedIn, /*checkOwnership*/ function(req
 			res.redirect("/patient");
 		}
 		else{
+			req.flash("success", "Medical Record Updated Successfully !!")
 			res.redirect("/patient/"+req.params.id);
 		}
 	});
@@ -69,7 +70,7 @@ router.delete("/:record_id",middleware.isLoggedIn,  function(req, res){
        if(err){
            res.redirect("back");
        } else {
-           req.flash("success", "Medicsl Record deleted");
+           req.flash("success", "Medical Record Deleted !!");
            res.redirect("/patient/" + req.params.id);
        }
     });
