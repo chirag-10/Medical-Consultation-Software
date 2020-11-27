@@ -4,9 +4,12 @@ var patientSchema = new mongoose.Schema({
 	name : {
 		type:String
 	},
-	age : String,
-	gender : String,
 	email : String,
+	medical_record : 
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Medical_Records"
+		 } 
 
 });
 

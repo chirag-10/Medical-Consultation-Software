@@ -1,8 +1,10 @@
-var express 	= require("express"),
-	router		= express.Router(),
-	Patient		= require("../models/patient"),
-	middleware	= require("../middleware"),
-	User		= require("../models/user")
+var express 		= require("express"),
+	router			= express.Router(),
+	Patient			= require("../models/patient"),
+	middleware		= require("../middleware"),
+	User			= require("../models/user"),
+	Medical_Records	= require("../models/med_records")
+	
 	
 	
 //show Patient Dashboard
@@ -17,9 +19,47 @@ router.get("/", middleware.isLoggedIn, function(req,res){
 	});
 });
 
+
+router.post("/:id", middleware.isLoggedIn, function(req,res){
+	Patient.findById(req.params.id, function(err, patient){
+		if(err){
+			console.log(err);
+			res.redirect("/patient")
+		}
+		else{
+			var medRec = req.body.medRec;
+			medRec.name = patient.name;
+
+			Medical_Records.create(medRec, function(err, medRec){
+				if(err){
+					console.log(err);
+				}
+				else{
+					medRec.save();
+					patient.medical_record = medRec;
+					patient.save();
+					console.log(medRec);
+					res.redirect("/patient/" + patient._id)
+				}
+			})
+		}
+	});
+});
+
+router.get("/:id/new", function(req, res){
+	Patient.findById(req.params.id , function(err, patient) {
+		if(err){
+			console.log(err);
+		}
+		else{
+			res.render("./patient/new",{patient:patient});
+		}
+	});
+});
+
 //Show medical Record
 router.get("/:id", function(req,res){
-	Patient.findById(req.params.id, function(err, patient){
+	Patient.findById(req.params.id).populate("medical_record").exec(function(err, patient){
 		if(err){
 			console.log(err);
 		}
@@ -31,14 +71,14 @@ router.get("/:id", function(req,res){
 
 //Edit Patient Details
 router.get("/:id/edit", /*checkOwnership*/ function(req,res){
-	Patient.findById(req.params.id, function(err, foundPatient){
-		res.render("./patient/edit", {patient:foundPatient})
+	Patient.findById(req.params.id).populate("medical_record").exec(function(err, foundPatient){
+		res.render("./patient/edit", {patient_id:req.params.id ,record:foundPatient.medical_record})
 	});
 });
 
 //Update Patient
-router.put(":/id", /*checkOwnership*/ function(req,res){
-	Patient.findByIdAndUpdate(req.params.id, req.body.patient, function(err, updatedPatient){
+router.put("/:id/:record_id", /*checkOwnership*/ function(req,res){
+	Medical_Records.findByIdAndUpdate(req.params.id, req.body.medRec, function(err, updatedRecord){
 		if(err){
 			res.redirect("/patient");
 		}

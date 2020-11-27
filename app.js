@@ -7,16 +7,18 @@ var express   		= require("express"),
 	User			= require("./models/user"),
 	flash			= require("connect-flash"),
 	methodOverride	= require("method-override"),
-	favicon 		= require("serve-favicon")
+	favicon 		= require("serve-favicon"),
+	mongoose		= require("mongoose")
 	
 //Requiring Routes
 var patientRoutes 	= require("./routes/patient");
 var indexRoutes		= require("./routes/index");
 
-
+mongoose.connect("mongodb://localhost/SHCS");
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(methodOverride("_method"));
 app.use(express.static(__dirname + "/public"));
 app.use(flash());
 app.use(favicon(path.join(__dirname,'public','favicon.ico')));

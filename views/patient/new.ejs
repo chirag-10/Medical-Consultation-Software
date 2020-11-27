@@ -1,1 +1,48 @@
-<h1> patient new </h1>
+<%- include("../partials/header.ejs") %>
+
+<div class="container">
+    <div class="row">
+        <h1 style="text-align: center">Add new Medical Record !!</h1>
+        <div style="width: 30%; margin: 25px auto;">
+            <form action="/patient/<%= patient._id %>" method="POST">
+                <div class="form-group">
+                    Age : <input class="form-control" type="number" name="medRec[age]" placeholder="Age">
+                </div>
+                <label>Select Gender </label>
+                <div class = "form-check">
+					<input class="form-check-input" type="radio" name="medRec[gender]" id="Radios1" value="male" >
+					<label class="form-check-label" for="Radios1">
+					Male
+					</label>
+				</div>
+				<div class = "form-check">
+					<input class="form-check-input" type="radio" name="medRec[gender]" id="Radios2" value="female" >
+					<label class="form-check-label" for="Radios1">
+					Female
+					</label>
+				</div>
+                <div class="form-group">
+                    Blood Group : <input class="form-control" type="text" name="medRec[blood_group]" placeholder="Blood Group">
+                </div>
+                <div class="form-group">
+                    Height      : <input class="form-control" type="number" name="medRec[height]" placeholder="height">
+                </div>
+                <div class="form-group">
+                    Weight      : <input class="form-control" type="number" name="medRec[weight]" placeholder="weight">
+                </div>
+                <div class="form-group">
+                    Sugar Level :<input class="form-control" type="number" name="medRec[sugar]" placeholder="Sugar Level">
+                </div>
+                <div class="form-group">
+                    BP Level :<input class="form-control" type="number" name="medRec[bp]" placeholder="BP Level">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Submit !</button>
+                </div>
+            </form>
+            <a href="/patient">Go Back</a>
+        </div>
+    </div>
+</div>
+
+<%- include("../partials/footer.ejs") %>

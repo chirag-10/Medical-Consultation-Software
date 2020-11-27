@@ -29,7 +29,7 @@ router.get("/register", function(req, res){
 });
 
 router.post("/register", function(req, res){
-	var newPatient = new Patient({name:req.body.name, age:req.body.age, gender:req.body.gender, email:req.body.email}) ;
+	var newPatient = new Patient({name:req.body.name, email:req.body.email}) ;
 	newPatient.save();
 	var newUser = new User({name : req.body.name, username : req.body.email, role:1});
 	

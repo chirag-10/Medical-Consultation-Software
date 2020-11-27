@@ -1,7 +1,5 @@
 var mongoose 				= require("mongoose"),
 	passportLocalMongoose	= require("passport-local-mongoose")
-	
-mongoose.connect("mongodb://localhost/SHCS");
 
 var UserSchema = new mongoose.Schema({
 	name: {
