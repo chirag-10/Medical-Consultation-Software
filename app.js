@@ -1,20 +1,21 @@
-var express   		= require("express"),
-	app	      		= express(),
-	path			= require("path"),
-	passport  		= require("passport"),
-	LocalStrategy	= require("passport-local"),
-	bodyParser		= require("body-parser"),
-	User			= require("./models/user"),
-	flash			= require("connect-flash"),
-	methodOverride	= require("method-override"),
-	favicon 		= require("serve-favicon"),
-	mongoose		= require("mongoose")
+var express   			= require("express"),
+	app	      			= express(),
+	path				= require("path"),
+	passport  			= require("passport"),
+	LocalStrategy		= require("passport-local"),
+	bodyParser			= require("body-parser"),
+	User				= require("./models/user"),
+	flash				= require("connect-flash"),
+	methodOverride		= require("method-override"),
+	favicon 			= require("serve-favicon"),
+	mongoose			= require("mongoose")
 	
 //Requiring Routes
-var patientRoutes 	= require("./routes/patient");
-var indexRoutes		= require("./routes/index");
-var adminRoutes     = require("./routes/admin");
-var db              = require("./config/keys").mongoURI;
+var patientRoutes 		= require("./routes/patient");
+var indexRoutes			= require("./routes/index");
+var adminRoutes     	= require("./routes/admin");
+var medicalRecordRoutes	= require("./routes/medicalrecords");
+var db              	= require("./config/keys").mongoURI;
 mongoose
   .connect(
     db,
@@ -49,13 +50,14 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req,res,next){
 	res.locals.currentUser 	= req.user;
-	res.locals.error		= req.flash.error;
-	res.locals.success		= req.flash.success;
+	res.locals.error		= req.flash("error");
+	res.locals.success		= req.flash("success");
 	next();
 });
 app.use("/", indexRoutes);
-app.use("/patient",patientRoutes);
+app.use("/patient/",patientRoutes);
 app.use('/admin', adminRoutes);
+app.use('/patient/:id/MedicalRecords/', medicalRecordRoutes);
 
 
 
