@@ -1,0 +1,16 @@
+<%- include("../partials/header.ejs") %>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1> Welcome to SHCS </h1>
+        </div>
+    </header>
+    <h1> Welcome <%=currentUser.username %></h1>
+    <h3> Admin of the site </h3>
+    <a href="/doctor/new">Add new doctor</a></br>
+    <a href="/admin/new"> Add new Admin</a></br>
+    <a href="/admin/admin">View all Admins</a></br>
+    <a href="/admin/patient">View all Patients</a></br>
+    <a href="/admin/doctor">View all Doctors</a></br>
+</div>
+<%- include("../partials/footer.ejs") %>

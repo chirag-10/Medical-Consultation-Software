@@ -11,7 +11,6 @@ router.get("/new", middleware.isLoggedIn, function(req,res){
 			console.log(err);
 		}
 		else{
-            console.log(patient); 
 			res.render("MedicalRecords/new",{patient:patient});
 		}
 	});
@@ -27,13 +26,13 @@ router.post("/", middleware.isLoggedIn, function(req,res){
 			var medRec = req.body.medRec;
 			medRec.name = patient.name;
 
-			Medical_Records.create(medRec, function(err, medRec){
+			Medical_Records.create(medRec, function(err, medRecord){
 				if(err){
 					console.log(err);
 				}
 				else{
-					medRec.save();
-					patient.medical_record = medRec;
+					medRecord.save();
+					patient.medical_record = medRecord;
 					patient.save();
 					res.redirect("/patient/" + req.params.id)
 				}

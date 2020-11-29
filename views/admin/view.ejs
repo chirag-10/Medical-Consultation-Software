@@ -1,0 +1,15 @@
+<%- include("../partials/header.ejs") %>
+    <div class="container">
+        <header class="jumbotron">
+            <div class="container">
+                <h1> Welcome to SHCS </h1>
+            </div>
+        </header>
+        <h1><%= heading %></h1>
+        <% users.forEach(function(user){ %>
+            <%= user.name %></br>
+        <% }) %>
+        <a href="/admin">Back to Dashboard </a>
+    </div>
+
+<%- include("../partials/footer.ejs") %>

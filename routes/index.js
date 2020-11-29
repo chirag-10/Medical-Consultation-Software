@@ -13,7 +13,13 @@ router.get('/', function(req,res){
 });
 
 router.get('/index', middleware.isLoggedIn, function(req,res){
-	res.redirect("/patient")
+	if (req.user.role === 0){
+		return res.redirect('/admin');
+	}
+	else if (req.user.role === 2) {
+		return res.redirect("/doctor");
+	}
+	res.redirect("/patient");
 });
 
 
@@ -36,11 +42,14 @@ router.post("/register", function(req, res){
 			req.flash('error', err.message);
 			return res.redirect("/register");
 		}
+		else{
+				passport.authenticate("local")(req,res,function(){
+				return res.redirect("/index");
+			});
+		}
 	});
-	/*passport.authenticate("local")(req,res,function(){
-		res.redirect("/index");
-	});	*/
-	res.redirect("/login")
+	
+	//res.redirect("/login")
 	
 });
 
@@ -60,10 +69,34 @@ router.post("/login", passport.authenticate("local",
 	return res.redirect("/index");
 });
 
+router.get("/forgot_pass", function(req,res){
+	res.render("forgot_pass");
+});
+
+router.post("/forgot_pass", function(req,res){
+	User.findOne({username:req.body.username},function(err, user){
+		if(err){
+			req.flash("err", err.message);
+			return res.redirect("/forgot_pass");
+		}
+		user.changePassword(req.body.oldpassword, req.body.newpassword, function(error, updatedUser) {
+			if(error){
+				req.flash("error", error.message);
+				return res.redirect("/");
+			}
+			req.flash("success", "Password changed Successfully");
+			res.redirect("/login");
+
+		});
+	});
+});
+
 router.get("/logout",function(req,res){
 	req.logout();
 	req.flash("success","Logged OUT");
 	return res.redirect("/");
 });
+
+
 
 module.exports = router;

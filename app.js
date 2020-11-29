@@ -15,6 +15,7 @@ var patientRoutes 		= require("./routes/patient");
 var indexRoutes			= require("./routes/index");
 var adminRoutes     	= require("./routes/admin");
 var medicalRecordRoutes	= require("./routes/medicalrecords");
+var doctorRoutes		= require("./routes/doctor");
 var db              	= require("./config/keys").mongoURI;
 mongoose
   .connect(
@@ -58,6 +59,7 @@ app.use("/", indexRoutes);
 app.use("/patient/",patientRoutes);
 app.use('/admin', adminRoutes);
 app.use('/patient/:id/MedicalRecords/', medicalRecordRoutes);
+app.use('/doctor', doctorRoutes);
 
 
 
