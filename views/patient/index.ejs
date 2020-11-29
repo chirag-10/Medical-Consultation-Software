@@ -11,7 +11,10 @@
 
 				<%= patient.name %></br>
 				<%= patient._id %></br>
+				role : 
+				<%= currentUser.role %>
 		</div>
+		<a href="/patient/getdocs"> View Doctors</a></br>
 		<a href="/patient/<%= patient._id %>"> Medical History </a></br>
 		<a href="/patient/<%= patient._id %>/edit">Edit Profile</a>
 		

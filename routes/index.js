@@ -13,7 +13,13 @@ router.get('/', function(req,res){
 });
 
 router.get('/index', middleware.isLoggedIn, function(req,res){
-	res.redirect("/patient")
+	if (req.user.role === 0){
+		return res.redirect('/admin');
+	}
+	else if (req.user.role === 2) {
+		return res.redirect("/doctor");
+	}
+	res.redirect("/patient");
 });
 
 
@@ -36,11 +42,14 @@ router.post("/register", function(req, res){
 			req.flash('error', err.message);
 			return res.redirect("/register");
 		}
+		else{
+				passport.authenticate("local")(req,res,function(){
+				return res.redirect("/index");
+			});
+		}
 	});
-	/*passport.authenticate("local")(req,res,function(){
-		res.redirect("/index");
-	});	*/
-	res.redirect("/login")
+	
+	//res.redirect("/login")
 	
 });
 

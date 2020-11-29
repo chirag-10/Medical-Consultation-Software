@@ -4,7 +4,11 @@ var patientSchema = new mongoose.Schema({
 	name : {
 		type:String
 	},
-	email : String,
+	email : {
+		type 		: String,
+		required 	: true,
+		unique		: true
+	},
 	medical_record : 
 		{
 			type: mongoose.Schema.Types.ObjectId,

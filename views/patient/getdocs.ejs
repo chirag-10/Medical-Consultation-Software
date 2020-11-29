@@ -1,0 +1,17 @@
+<%- include("../partials/header.ejs") %>
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1> Welcome to SHCS </h1>
+        </div>
+    </header>
+    <h1>Doctor List</h1>
+    <% doctors.forEach(function(doctor){ %>
+        <a href="/doctor/<%= doctor._id %>"><%= doctor.name %></a></br>
+    <% }) %>
+    </br>
+    <a href="/patient">Go Back</a>
+</div>
+
+<%- include("../partials/footer.ejs") %>
