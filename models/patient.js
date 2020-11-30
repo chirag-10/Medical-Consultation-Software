@@ -13,7 +13,7 @@ var patientSchema = new mongoose.Schema({
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Medical_Records"
-		 } 
+		 }
 
 });
 

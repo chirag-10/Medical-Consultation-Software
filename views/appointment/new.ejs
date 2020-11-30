@@ -1,0 +1,28 @@
+<%- include ('../partials/header.ejs') %>
+  <div class="container">
+    <div class="row">
+        <h1 style="text-align: center">Add Appointment !!</h1>
+        <div style="width: 30%; margin: 25px auto;">
+            <form action="/patient/<%= patient_id %>/appointment" method="POST">
+				<div class="form-group">
+                  <label for="name">Doctor name: </label>
+                  <input class="form-control" type="text" name="name" placeholder="name" id="name" required=true>
+                </div>
+				<div class="form-group">
+                    <label for="datetime">Select Time</label>
+                    <input type="datetime-local" name="time"> 
+                </div>
+                <div class="form-group">
+                    <label for="name">Reason : </label>
+                    <input class="form-control" type="text" name="description" placeholder="Reason for Appointment" id="description" required=true>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Book Appointment !!</button>
+                </div>
+            </form>
+            <a href="/patient">Go Back</a>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer.ejs') %>

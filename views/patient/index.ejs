@@ -16,7 +16,9 @@
 		</div>
 		<a href="/patient/getdocs"> View Doctors</a></br>
 		<a href="/patient/<%= patient._id %>"> Medical History </a></br>
-		<a href="/patient/<%= patient._id %>/edit">Edit Profile</a>
+		<a href="/patient/<%= patient._id %>/edit">Edit Profile</a></br>
+		<a href="/patient/<%= patient._id %>/appointment/new">Book new Appointment</a></br>
+		<a href="/patient/<%= patient._id %>/appointment/">View Appointments</a></br>
 		
 	</div>
 <%- include('../partials/footer.ejs') %>
