@@ -63,9 +63,3 @@ app.use('/admin', adminRoutes);
 app.use('/patient/:id/MedicalRecords/', medicalRecordRoutes);
 app.use('/doctor', doctorRoutes);
 app.use('/patient/:id/appointment/', appointmentRoutes);
-
-
-
-app.listen(5000, function(){
-	console.log("Starting Server")
-});
