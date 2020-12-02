@@ -47,7 +47,6 @@ router.get("/:id", middleware.isLoggedIn, function(req,res){
 	});
 });
 
-
 //Edit Patient Profile
 router.get("/:id/edit", middleware.isLoggedIn, /*checkOwnership*/ function(req,res){
 	Patient.findById(req.params.id, function(err, foundPatient){
@@ -68,9 +67,5 @@ router.put("/:id", middleware.isLoggedIn, /*checkOwnership*/ function(req,res){
 		}
 	});
 });
-
-
-
-
 
 module.exports = router;

@@ -8,7 +8,18 @@ var express   			= require("express"),
 	flash				= require("connect-flash"),
 	methodOverride		= require("method-override"),
 	favicon 			= require("serve-favicon"),
-	mongoose			= require("mongoose")
+  mongoose			= require("mongoose")
+  const http = require('http');
+  const server = http.createServer(app);
+  const socketio = require('socket.io');
+  const io = socketio(server);
+  const {
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers
+} = require('./utils/users');
+const formatMessage = require('./utils/messages');
 	
 //Requiring Routes
 var patientRoutes 		= require("./routes/patient");
@@ -57,9 +68,72 @@ app.use(function(req,res,next){
 	res.locals.success		= req.flash("success");
 	next();
 });
+
+
 app.use("/", indexRoutes);
 app.use("/patient/",patientRoutes);
 app.use('/admin', adminRoutes);
-app.use('/patient/:id/MedicalRecords/', medicalRecordRoutes);
 app.use('/doctor', doctorRoutes);
+
 app.use('/patient/:id/appointment/', appointmentRoutes);
+
+app.use('/patient/:id/MedicalRecords/', medicalRecordRoutes);
+
+const botName = 'Chat Bot';
+
+// Run when client connects
+io.on('connection', socket => {
+  socket.on('joinRoom', ({ username, room }) => {
+    const user = userJoin(socket.id, username, room);
+
+    socket.join(user.room);
+
+    // Welcome current user
+    socket.emit('message', formatMessage(botName, 'Welcome to Chat Room!'));
+
+    // Broadcast when a user connects
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        'message',
+        formatMessage(botName, `${user.username} has joined the chat!`)
+      );
+
+    // Send users and room info
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room)
+    });
+  });
+
+  // Listen for chatMessage
+  socket.on('chatMessage', msg => {
+    const user = getCurrentUser(socket.id);
+    // console.log(msg, user)
+    io.to(user.room).emit('message', formatMessage(user.username, msg));
+  });
+
+  // Runs when client disconnects
+  socket.on('disconnect', () => {
+    const user = userLeave(socket.id);
+
+    if (user) {
+      io.to(user.room).emit(
+        'message',
+        formatMessage(botName, `${user.username} has left the chat`)
+      );
+
+      // Send users and room info
+      io.to(user.room).emit('roomUsers', {
+        room: user.room,
+        users: getRoomUsers(user.room)
+      });
+    }
+  });
+});
+
+
+const PORT = process.env.PORT || 5000;
+
+server.listen(PORT, console.log(`Server started on port ${PORT}`));
+

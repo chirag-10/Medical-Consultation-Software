@@ -14,64 +14,89 @@ router.get("/new", middleware.isLoggedIn, middleware.isAdmin, function(req,res){
     res.render("./doctor/new");
 });
 
-router.get("/", middleware.isLoggedIn, function(req,res){
-  res.render('./doctor/index');
+router.get("/", middleware.isDoctor, function(req,res){
+  Doctor.findOne({'email' : req.user.username}, function(err, doc) {
+		if(err){
+			console.log(err);
+		}
+		else{
+			res.render("./doctor/index",{doctor:doc, user:req});
+		}
+	});
 });
 
-
-
-router.get("/:id",middleware.isLoggedIn , function(req, res){
-    Doctor.findById(req.params.id, function(err, doctor){
-        if(err){
-            console.log(err);
-            return res.redirect("/patient");
-        }
-        res.render("./doctor/show", {doctor : doctor});
-    });
+router.get("/:id", middleware.isDoctor, function(req,res){
+	Doctor.findById(req.params.id).exec(function(err, doctor){
+		if(err){
+			console.log(err);
+		}
+		else{
+			res.render("./doctor/show" ,{doctor:doctor});
+		}
+	});
 });
 
-router.post('/', middleware.isLoggedIn, middleware.isAdmin, (req,res,next)=>{
-    const { name, email, address, phone, degree, remark } = req.body;
-    Doctor.find({ email: req.body.email })
-    .exec()
-    .then(doctors => {
-      if (doctors.length >= 1) {
-        req.flash("error", "Doctor with same email Id already registered")
-        res.redirect('/admin')
-      } else {
-            const doc = new Doctor({
-              name,
-              email,
-              address,
-              phone,
-              degree,
-              remark,
-            });
-            var pass = initialPassword()
-            console.log(doc);
-            doc
-              .save()
-              .then(result => {
-                sendMail( 'Login credentials for Smart Health Project account.',
-                          "Email Id:" + req.body.email + "\n" + "Password:" + pass + "\n You can reset your password on our website.",
-                          email
-                        )
-              })
-              .catch(err => {
-                res.send(err)
-              });
-              const newUser = new User({
-                name:name,
-                username:email,
-                role:2,
+router.post('/new', middleware.isLoggedIn, middleware.isAdmin, (req,res,next)=>{
+  const { name, email, address, phone, degree, remark } = req.body;
+  Doctor.find({ email: req.body.email })
+  .exec()
+  .then(doctors => {
+    if (doctors.length >= 1) {
+      req.flash("error", "Doctor with same email Id already registered")
+      res.redirect('/new')
+    } else {
+          const doc = new Doctor({
+            name,
+            email,
+            address,
+            phone,
+            degree,
+            remark,
           });
-          User.register(newUser, pass)
-                .then(result => {
-                  console.log("New User has been registered")
-                })
-          res.redirect('/admin')
-        }
-    });
+          var pass = initialPassword()
+          console.log(doc);
+          doc
+            .save()
+            .then(result => {
+              sendMail( 'Login credentials for Smart Health Project account.',
+                        "Email Id:" + req.body.email + "\n" + "Password:" + pass + "\n You can reset your password on our website.",
+                        email
+                      )
+            })
+            .catch(err => {
+              res.send(err)
+            });
+            const newUser = new User({
+              name:name,
+              username:email,
+              role:2,
+        });
+        User.register(newUser, pass)
+              .then(result => {
+                console.log("New User has been registered")
+              })
+        res.redirect('/login')
+      }
+  });
+});
+
+
+router.get("/:id/edit",middleware.isDoctor, /*checkOwnership*/ function(req,res){
+	Doctor.findById(req.params.id).exec(function(err, doctor){
+		res.render("./doctor/edit", {doctor:doctor});
+	});
+});
+
+router.put("/:id", middleware.isDoctor, /*checkOwnership*/ function(req,res){
+	Doctor.findByIdAndUpdate(req.params.id, req.body.doctor , function(err, updatedDetails){
+		if(err){
+			res.redirect("/doctor");
+		}
+		else{
+			req.flash("success", "Doctor Details Updated Successfully !!");
+			res.redirect("/doctor/"+req.params.id);
+		}
+	});
 });
 
 router.get("/:id/appointment", function(req,res){
@@ -131,4 +156,3 @@ function initialPassword(){
 }
 
 module.exports=router;
-
