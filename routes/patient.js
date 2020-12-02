@@ -47,4 +47,25 @@ router.get("/:id", middleware.isLoggedIn, function(req,res){
 	});
 });
 
+//Edit Patient Profile
+router.get("/:id/edit", middleware.isLoggedIn, /*checkOwnership*/ function(req,res){
+	Patient.findById(req.params.id, function(err, foundPatient){
+		res.render("./patient/edit", {patient : foundPatient});
+	});
+});
+
+
+router.put("/:id", middleware.isLoggedIn, /*checkOwnership*/ function(req,res){
+    Patient.findByIdAndUpdate(req.params.id, req.body.patient, function(err, updatedPatient){
+		if(err){
+			req.flash("error", err.message);
+			res.redirect("/patient");
+		}
+		else{
+			req.flash("success", "Profile Updated Successfully !!");
+			res.redirect("/patient");
+		}
+	});
+});
+
 module.exports = router;

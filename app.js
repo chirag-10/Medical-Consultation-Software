@@ -27,7 +27,9 @@ var indexRoutes			= require("./routes/index");
 var adminRoutes     	= require("./routes/admin");
 var medicalRecordRoutes	= require("./routes/medicalrecords");
 var doctorRoutes		= require("./routes/doctor");
+var appointmentRoutes	= require("./routes/appointment");
 var db              	= require("./config/keys").mongoURI;
+
 mongoose
   .connect(
     db,
@@ -72,6 +74,9 @@ app.use("/", indexRoutes);
 app.use("/patient/",patientRoutes);
 app.use('/admin', adminRoutes);
 app.use('/doctor', doctorRoutes);
+
+app.use('/patient/:id/appointment/', appointmentRoutes);
+
 app.use('/patient/:id/MedicalRecords/', medicalRecordRoutes);
 
 const botName = 'Chat Bot';
@@ -131,4 +136,4 @@ io.on('connection', socket => {
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, console.log(`Server started on port ${PORT}`));
-// server listen
+

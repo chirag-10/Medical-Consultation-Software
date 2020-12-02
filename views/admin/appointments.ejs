@@ -1,0 +1,30 @@
+<%- include("../partials/header.ejs") %>
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1> Welcome to SHCS </h1>
+        </div>
+    </header>
+    <h1>Appointments </h1> </br></br>
+    <% if(appointments.length === 0){ %>
+        <span>No Appointments Booked </span>
+    <% } else { %>
+        <% appointments.forEach(function(appointment){ %>
+            <div>
+                <div>
+                    Patient : <%= appointment.patient.name %> &nbsp; &nbsp; Doctor : <%= appointment.doctor.name %>
+                </div>
+                <div>
+                    Date : <%= appointment.date %>&nbsp; &nbsp;Reason : <%= appointment.description %></br>
+                </div>
+            </div>
+        </br></br>
+        <% }) %>
+    <% } %>
+    </br></br>
+    <a href="/admin">Back to Dashboard</a>
+
+</div>
+
+<%- include("../partials/footer.ejs") %>
