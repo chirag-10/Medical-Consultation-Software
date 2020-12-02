@@ -47,6 +47,4 @@ router.get("/:id", middleware.isLoggedIn, function(req,res){
 	});
 });
 
-
-
 module.exports = router;

@@ -8,4 +8,13 @@
         <h1>Welcome Doctor </h1>
         <a class="#" href="#">View Appointment </a></br></br>
     </div>
+    <div class="row text-center" style="display:flex; flex:wrap; ">
+
+        <%= doctor.name %></br>
+        <%= doctor._id %></br>
+        role : 
+        <%= currentUser.role %>
+    </div>
+    <a href="/doctor/<%= doctor._id %>">View Profile</a>
+    <a href="/doctor/<%= doctor._id %>/edit">Edit Profile</a>
 <%- include("../partials/footer.ejs") %>
