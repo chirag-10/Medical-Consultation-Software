@@ -1,3 +1,4 @@
+const User = require("../models/user");
 const { all } = require("./patient");
 
 var express     = require("express"),
@@ -12,6 +13,28 @@ var express     = require("express"),
 router.get("/new", middleware.isLoggedIn, function(req,res){
     res.render("./appointment/new", {patient_id : req.params.id});
 });    
+
+router.get("/new/:doctor_id", function(req, res){
+    User.findById(req.params.id, function(err, user){
+        if(err){
+            console.log(err);
+            return res.redirect("./patient");
+        }
+        Patient.findOne({email:user.username}, function(error, patient){
+            if(error){
+            console.log(err);
+            return res.redirect("./patient"); 
+            }
+            Doctor.findById(req.params.doctor_id, function(err, doctor){
+                if(err){
+                    req.flash("error", err.message);
+                    return res.redirect("/patient");
+                }
+                res.render("./appointment/doctor", {doctor:doctor, patient_id : patient._id});
+            });
+        });
+    });
+});
 
 
 router.post("/", middleware.isLoggedIn, function(req,res){
@@ -31,7 +54,6 @@ router.post("/", middleware.isLoggedIn, function(req,res){
                 req.flash("error", "Doctor not found");
                 return res.redirect("/patient");
             }
-            console.log(doctor)
             var newAppointment = new Appointment({patient:req.params.id, doctor:doctor._id , date : req.body.time, description : req.body.description})
             newAppointment.save();
             req.flash("success", "Appointment Booked Successfully");
@@ -51,6 +73,8 @@ router.get("/", middleware.isLoggedIn, function(req, res){
         res.render("./appointment/view", {appointments:allAppointments});
     });
 });
+
+
 
 
 //Update Appointment
@@ -77,8 +101,10 @@ router.put("/:app_id", middleware.isLoggedIn, /*checkOwnership*/ function(req,re
                 res.redirect("/patient");
             }
             else{
-                console.log(updatedAppointment);
                 req.flash("success", "Appointment Updated Successfully !!");
+                if(req.user.role === 2){
+                    return res.redirect("/doctor");
+                }
                 res.redirect("/patient/"+req.params.id+"/appointment");
             }
         });
@@ -90,10 +116,13 @@ router.delete("/:app_id",middleware.isLoggedIn,  function(req, res){
     //findByIdAndRemove
     Appointment.findByIdAndRemove(req.params.app_id, function(err){
        if(err){
-           res.redirect("/patient/"+ req.params.id );
+           return res.redirect("/patient/"+ req.params.id );
        } 
        else {
            req.flash("success", "Appointment Deleted !!");
+           if(req.user.role === 2){
+               return res.redirect("/doctor");
+           }
            res.redirect("/patient/" + req.params.id + "/appointment");
        }
     });

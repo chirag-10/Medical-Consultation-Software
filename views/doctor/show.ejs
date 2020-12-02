@@ -11,7 +11,7 @@
         <%= doctor.phone %></br>
         <%= doctor.degree %></br>
         <%= doctor.remark %></br>
-        <a class="btn btn-sm btn-primary " href="#">Book Appointment </a></br></br>
+        <a class="btn btn-sm btn-primary " href="/patient/<%= currentUser._id %>/appointment/new/<%= doctor._id %>">Book Appointment </a></br></br>
         <a href="/patient/getdocs">Go Back</a>
     </div>
 <%- include("../partials/footer.ejs") %>

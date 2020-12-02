@@ -69,15 +69,15 @@ router.post("/login", passport.authenticate("local",
 	return res.redirect("/index");
 });
 
-router.get("/forgot_pass", function(req,res){
-	res.render("forgot_pass");
+router.get("/change_pass", function(req,res){
+	res.render("change_pass");
 });
 
-router.post("/forgot_pass", function(req,res){
+router.post("/change_pass", function(req,res){
 	User.findOne({username:req.body.username},function(err, user){
 		if(err){
 			req.flash("err", err.message);
-			return res.redirect("/forgot_pass");
+			return res.redirect("/change_pass");
 		}
 		user.changePassword(req.body.oldpassword, req.body.newpassword, function(error, updatedUser) {
 			if(error){

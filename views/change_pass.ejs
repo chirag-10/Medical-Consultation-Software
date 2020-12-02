@@ -5,18 +5,18 @@
     <div class="row">
         <h1 style="text-align: center">Forgot Password !!</h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/forgot_pass" method="POST">
+            <form action="/change_pass" method="POST">
                 <label for="username">Enter Username :</label>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="username" placeholder="username">
+                    <input class="form-control" type="text" name="username" placeholder="username" required=true>
                 </div>
                 <label for="oldpassword">Enter old Password :</label>
                 <div class="form-group">
-                    <input class="form-control" type="password" name="oldpassword" placeholder="password">
+                    <input class="form-control" type="password" name="oldpassword" placeholder="password" required=true>
                 </div>
                 <label for="newpassword">Enter new Password :</label>
                 <div class="form-group">
-                    <input class="form-control" type="password" name="newpassword" placeholder="password">
+                    <input class="form-control" type="password" name="newpassword" placeholder="password" required=true>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Submit !</button>

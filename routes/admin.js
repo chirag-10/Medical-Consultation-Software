@@ -8,6 +8,7 @@ var   generator  = require('generate-password');
 var   middleware = require("../middleware");
 const Admin      = require("../models/admin");
 const Patient	 = require("../models/patient");
+const Appointment = require('../models/appointment');
 
 
 router.get("/", middleware.isLoggedIn, middleware.isAdmin, function(req,res){
@@ -65,6 +66,17 @@ router.get('/doctor', middleware.isLoggedIn, middleware.isAdmin, function(req, r
 			return res.redirect('/admin');
 		}
 		res.render('./admin/view', {users:allDoctor, heading:"View All Doctors"});
+	});
+});
+
+router.get('/appointment', middleware.isLoggedIn, middleware.isAdmin, function(req,res){
+	Appointment.find({}).populate("doctor").populate("patient").exec(function(err, allAppointments){
+		if(err){
+			console.log(err);
+			req.flash("error", err.message);
+			return res.redirect("/admin");
+		}
+		res.render("./admin/appointments", {appointments : allAppointments});
 	});
 });
 	

@@ -6,7 +6,8 @@ var express 		  = require("express"),
     Patient			  = require("../models/patient"),
     Doctor        = require("../models/doctor"),
     nodemailer    = require('nodemailer'),
-    generator     = require('generate-password')
+    generator     = require('generate-password'),
+    Appointment   = require("../models/appointment")
 
 
 router.get("/new", middleware.isLoggedIn, middleware.isAdmin, function(req,res){
@@ -72,6 +73,30 @@ router.post('/', middleware.isLoggedIn, middleware.isAdmin, (req,res,next)=>{
         }
     });
 });
+
+router.get("/:id/appointment", function(req,res){
+  User.findById(req.params.id, function(error, user ){
+    if(error){
+      console.log(err);
+      return res.redirect("/doctor");
+    }
+    Doctor.findOne({email: user.username}, function(error1, doctor){
+        if(error){
+          console.log(error1);
+          return res.redirect("/doctor");
+        }
+        Appointment.find({doctor:doctor._id}).populate("patient").exec(function(err, allAppointments){
+          if(err){
+            req.flash("error", err.message);
+            return res.redirect("/doctor");
+          }
+          res.render("./doctor/appointments",{appointments : allAppointments});
+        });
+      });
+  });
+});
+
+
 
 function sendMail(sub, msg, tomail){
   var transporter = nodemailer.createTransport({
