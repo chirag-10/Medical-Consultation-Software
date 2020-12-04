@@ -3,20 +3,27 @@
 	<head>
 		<title>SHCS</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/stylesheets/patient_index.css">
+		<link rel="stylesheet" href="/stylesheets/doc_show.css">
 	</head>
 	<body>
-		<nav class="navbar navbar-default">
+		<nav class="navbar-expand-md p-0 fixed-top" style="background-color:rgb(94, 94, 212);">
 			<div class="container-fluid">
 				<div class="container-header">
-					<a class="navbar-brand" href="/"> SHCS </a>
+					<a class="navbar-brand" href="/" style="color:azure;"> SHCS </a>
 				</div>
 				<div class="collapse navbar-collapse">
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="navbar-nav navbar-right text-white" style="list-style-type:none;">
 					<% if(!currentUser) { %>
-						<li><a href="/login"> Login </a></li>
-						<li><a href="/register"> Sign UP </a></li>
+						<a href="/login"><button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-log-out"></span> Login </a>
+						<a href="/register"><button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-log-out"></span> Sign UP </a>
 					<%} else { %>
-						<li><a href="/logout"> Logout </a></li>
+					<li class="nav-item items"><h3 style="color: azure;"><span class="glyphicon glyphicon-user"><%= currentUser.name %></span></h3></li>
+				
+					<li class="nav-item items" style="margin-top: 25px;"><a href="/logout"><button type="button" class="btn btn-default btn-sm" style="margin-left: 20px;">
+							<span class="glyphicon glyphicon-log-out"></span> Logout </button></a></li>
 					<% } %>
 					</ul>
 				</div>

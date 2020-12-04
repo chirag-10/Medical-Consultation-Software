@@ -1,6 +1,6 @@
 <%- include("../partials/header.ejs") %>
 <div class="container">
-    <header class="jumbotron">
+    <header class="jumbotron" style="background-image: url('../images/cover_aboutus.jpg');">
         <div class="container">
             <h1> Welcome to SHCS </h1>
         </div>
@@ -27,9 +27,9 @@
     Sugar       :<%= patient.medical_record.sugar %> </br>
     BP          :<%= patient.medical_record.bp %></br>
     <% } else { %>
-    No Record Found . Add new Record
+    No Record Found
     <% } %>
-
+    <br><br>
     <a href="/patient">Back to Dashboard  </a>
 </div>
 
