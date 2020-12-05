@@ -1,23 +1,30 @@
 <%- include("../partials/header.ejs") %>
 
 <div class="container">
-    <header class="jumbotron">
-        <div class="container">
-            <h1> Welcome to SHCS </h1>
-        </div>
-    </header>
     <h1>Appointments </h1> </br></br>
     <% if(appointments.length === 0){ %>
         <span>No Appointments Booked </span>
     <% } else { %>
+        <table style="width:100%">
+            <tr>
+                <th><h3>Patient Name</h3></th>
+                <th><h3>Date</h3></th>
+                <th><h3>Reason</h3></th>
+                <th><h3>Modify</h3></th>
+            </tr>
         <% appointments.forEach(function(appointment){ %>
-            Patient : <%= appointment.patient.name %>&nbsp; &nbsp;Date : <%= appointment.date %>&nbsp; &nbsp;Reason : <%= appointment.description %></br>
-        <a class="btn btn-xs btn-warning" href="/patient/<%= appointment.patient._id%>/appointment/<%= appointment._id %>/edit ">Update</a>
-        <form  action="/patient/<%= appointment.patient._id %>/appointment/<%= appointment._id %>?_method=DELETE" method="POST">
-            <button class="btn btn-xs btn-danger">Delete</button>
+            <tr>
+                <th><%= appointment.patient.name %>&nbsp; &nbsp;</th>
+                <th><%= appointment.date %>&nbsp; &nbsp;</th>
+                <th><%= appointment.description %></th>
+                <th><br><a class="btn btn-xs btn-warning" href="/patient/<%= appointment.patient._id%>/appointment/<%= appointment._id %>/edit ">Update</a><br>
+                <form  action="/patient/<%= appointment.patient._id %>/appointment/<%= appointment._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-xs btn-danger">Delete</button>
         </form>
         </br></br>
         <% }) %>
+        </tr>
+        </table>
     <% } %>
     </br></br>
     <a href="/doctor">Back to Dashboard</a>
