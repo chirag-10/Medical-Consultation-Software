@@ -5,24 +5,16 @@
 				<h1> Welcome to SHCS </h1>
 			</div>
 		</header>
-
         <h1><%= doctor.name %></h1>
-        <%= doctor.email %></br>
-        <%= doctor.address %></br>
-        <%= doctor.phone %></br>
-        <%= doctor.degree %></br>
-        <%= doctor.remark %></br>
+        Email   :        <%= doctor.email %></br>
+        Address :        <%= doctor.address %></br>
+        Contact :        <%= doctor.phone %></br>
+        Qualification:   <%= doctor.degree %></br>
+        Remark  :        <%= doctor.remark %></br>
+        <% if(currentUser.role == 1){ %>
         <a class="btn btn-sm btn-primary " href="/patient/<%= currentUser._id %>/appointment/new/<%= doctor._id %>">Book Appointment </a></br></br>
-        <a href="/patient/getdocs">Go Back</a>
-
-        Name :<h1><%= doctor.name %></h1>
-        Email :<%= doctor.email %></br>
-        Address:<%= doctor.address %></br>
-        Contact:<%= doctor.phone %></br>
-        Qualification:<%= doctor.degree %></br>
-        Remark:<%= doctor.remark %></br>
-        <a class="btn btn-sm btn-primary " href="#">Book Appointment </a></br></br>
-        <a href="/">Go Back</a>
+        <% } %>
+        <a href="/doctor">Go Back</a>
 
     </div>
 <%- include("../partials/footer.ejs") %>

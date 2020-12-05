@@ -6,11 +6,17 @@
             <form action="/patient/<%= patient_id %>/appointment" method="POST">
 				<div class="form-group">
                   <label for="name">Doctor name: </label>
-                  <input class="form-control" type="text" name="name" placeholder="name" id="name" required=true>
+                  <select class="form-control" id="name", name="doctor">
+                  <option value="" disabled selected>Select a Doctor</option>
+                  <% doctors.forEach(function(doctor){ %>
+                    <option value="<%= doctor._id %>"><%= doctor.name %></option>
+                  <% }); %> 
+                </select> 
                 </div>
+
 				<div class="form-group">
-                    <label for="datetime">Select Time</label>
-                    <input type="datetime-local" name="time"> 
+                    <label for="time">Select Time :</label>
+                    <input class="form-control" id="time" type="datetime-local" name="time"> 
                 </div>
                 <div class="form-group">
                     <label for="name">Reason : </label>

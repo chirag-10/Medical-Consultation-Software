@@ -14,7 +14,7 @@ router.get("/new", middleware.isLoggedIn, middleware.isAdmin, function(req,res){
     res.render("./doctor/new");
 });
 
-router.get("/", middleware.isDoctor, function(req,res){
+router.get("/", middleware.isLoggedIn, middleware.isDoctor, function(req,res){
   Doctor.findOne({'email' : req.user.username}, function(err, doc) {
 		if(err){
 			console.log(err);
@@ -25,7 +25,7 @@ router.get("/", middleware.isDoctor, function(req,res){
 	});
 });
 
-router.get("/:id", middleware.isDoctor, function(req,res){
+router.get("/:id", middleware.isLoggedIn, function(req,res){
 	Doctor.findById(req.params.id).exec(function(err, doctor){
 		if(err){
 			console.log(err);
@@ -81,13 +81,13 @@ router.post('/new', middleware.isLoggedIn, middleware.isAdmin, (req,res,next)=>{
 });
 
 
-router.get("/:id/edit",middleware.isDoctor, /*checkOwnership*/ function(req,res){
+router.get("/:id/edit",middleware.isLoggedIn, middleware.isDoctor, /*checkOwnership*/ function(req,res){
 	Doctor.findById(req.params.id).exec(function(err, doctor){
 		res.render("./doctor/edit", {doctor:doctor});
 	});
 });
 
-router.put("/:id", middleware.isDoctor, /*checkOwnership*/ function(req,res){
+router.put("/:id", middleware.isLoggedIn,middleware.isDoctor, /*checkOwnership*/ function(req,res){
 	Doctor.findByIdAndUpdate(req.params.id, req.body.doctor , function(err, updatedDetails){
 		if(err){
 			res.redirect("/doctor");
@@ -110,16 +110,57 @@ router.get("/:id/appointment", function(req,res){
           console.log(error1);
           return res.redirect("/doctor");
         }
-        Appointment.find({doctor:doctor._id}).populate("patient").exec(function(err, allAppointments){
+        Appointment.find({doctor:doctor._id}).populate("patient").populate("doctor").exec(function(err, allAppointments){
           if(err){
             req.flash("error", err.message);
             return res.redirect("/doctor");
           }
-          res.render("./doctor/appointments",{appointments : allAppointments});
+          var date = new Date(),
+            addDate = new Date()
+          date = date.setMinutes(date.getMinutes() - 30);
+          addDate = addDate.setMinutes(addDate.getMinutes() + 30);
+          var prevAppointment = [];
+          var presAppointment = [];
+          var futureAppointment = [];
+          allAppointments.forEach(function(appointment){
+              if(appointment.date.getTime() < date){
+                  prevAppointment.push(appointment);
+              }                
+              else if(appointment.date.getTime() < addDate){
+                  presAppointment.push(appointment);
+              }
+              else{
+                  futureAppointment.push(appointment);
+              }
+          });
+          prevAppointment.sort((a,b) => (a.date > b.date)? 1:-1);
+          presAppointment.sort((a,b) => (a.date > b.date)? 1:-1);
+          futureAppointment.sort((a,b) => (a.date > b.date)? 1:-1);
+          res.render("./doctor/appointments", {prevAppointment:prevAppointment, presAppointment:presAppointment, futureAppointment:futureAppointment});
         });
       });
   });
 });
+
+router.delete("/:id",middleware.isLoggedIn, middleware.isAdmin,  function(req, res){
+  Appointment.deleteMany({doctor:req.params.id}, function(err){
+    if(err){
+      console.log(err);
+      req.flash("error",err.message );
+      res.redirect("/admin");
+    }
+    Doctor.findByIdAndRemove(req.params.record_id, function(error){
+      if(err){
+          res.redirect("/admin");
+      } else {
+          req.flash("success", "Doctor Deleted !!");
+          res.redirect("/admin/doctor");
+      }
+    });
+  });
+});
+
+  
 
 
 

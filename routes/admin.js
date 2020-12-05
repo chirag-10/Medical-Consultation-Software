@@ -10,53 +10,9 @@ const Admin      = require("../models/admin");
 const Patient	 = require("../models/patient");
 const Appointment = require('../models/appointment');
 
-
-router.post('/addDoc', middleware.isAdmin, (req,res,next)=>{
-    const { name, email, address, phone, degree, remark } = req.body;
-    Doctor.find({ email: req.body.email })
-    .exec()
-    .then(doctors => {
-      if (doctors.length >= 1) {
-        res.render('addDoctor')
-      } else {
-            const doc = new Doctor({
-              name,
-              email,
-              address,
-              phone,
-              degree,
-              remark,
-            });
-            var pass = initialPassword()
-            console.log(doc);
-            doc
-              .save()
-              .then(result => {
-                sendMail( 'Login credentials for Smart Health Project account.',
-                          "Email Id:" + req.body.email + "\n" + "Password:" + pass + "\n You can reset your password on our website.",
-                          email
-                        )
-              })
-              .catch(err => {
-                res.send(err)
-              });
-              const username = email;
-              const newUser = new User({
-                name,
-                username,
-                pass,
-                role:2,
-          });
-          newUser
-                .save()
-                .then(result => {
-                  console.log("New User has been registered")
-                })
-          res.redirect('/')
-        }
-    });
+router.get("/", middleware.isLoggedIn, middleware.isAdmin, function(req,res){
+  res.render("./admin/index");
 });
-
 router.get("/new", middleware.isLoggedIn, middleware.isAdmin, function(req, res){
   res.render("./admin/new");
 });
@@ -121,6 +77,8 @@ router.get('/appointment', middleware.isLoggedIn, middleware.isAdmin, function(r
 		res.render("./admin/appointments", {appointments : allAppointments});
 	});
 });
+
+
 	
 module.exports = router;
 

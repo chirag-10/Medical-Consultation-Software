@@ -23,6 +23,8 @@ router.get('/index', middleware.isLoggedIn, function(req,res){
 });
 
 
+
+
 // Auth Routes
 
 //Register

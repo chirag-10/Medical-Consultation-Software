@@ -7,14 +7,14 @@
 		</header>
         <h1>Welcome Doctor </h1>
         <a class="#" href="/doctor/<%= currentUser._id %>/appointment">View Appointment </a></br></br>
-    </div>
-    <div class="row text-center" style="display:flex; flex:wrap; ">
+        <div class="row text-center" style="display:flex; flex:wrap; ">
 
-        <%= doctor.name %></br>
-        <%= doctor._id %></br>
-        role : 
-        <%= currentUser.role %>
+            <%= doctor.name %></br>
+            <%= doctor._id %></br>
+            role : 
+            <%= currentUser.role %>
+        </div>
+        <a href="/doctor/<%= doctor._id %>">View Profile</a>
+        <a href="/doctor/<%= doctor._id %>/edit">Edit Profile</a>
     </div>
-    <a href="/doctor/<%= doctor._id %>">View Profile</a>
-    <a href="/doctor/<%= doctor._id %>/edit">Edit Profile</a>
 <%- include("../partials/footer.ejs") %>
