@@ -1,7 +1,10 @@
 <%- include("../partials/header.ejs") %>
+    
+
     <div class="container">
-        <header class="jumbotron">
+        <header class="jumbotron" style="background-image: url('../images/cover_aboutus.jpg');">
 			<div class="container">
+
 				<h1> Welcome to SHCS </h1>
 			</div>
 		</header>
@@ -17,4 +20,23 @@
         <a href="/doctor/<%= doctor._id %>">View Profile</a>
         <a href="/doctor/<%= doctor._id %>/edit">Edit Profile</a>
     </div>
+<!--
+				<h1 style="text-align: center;"> Welcome to SHCS </h1>
+            </div>
+            <ul class="navbar-nav text-white" style="list-style-type:none;">
+                <li class="nav-item items" style="margin:5px 0 50px; ">
+                    <a href="/doctor/<%= doctor._id %>/edit"><button class="btn btn-success btn-change" style="margin-left: 240px;">Edit Profile</button></a>
+                </li>
+                <li class="nav-item items " style="margin:5px 0 50px; " >
+                    <a href="/doctor/<%= doctor._id %>"><button class="btn btn-info btn-change" style="margin-left: 50px;" >View Profile</button></a>
+                </li>
+                <li class="nav-item items" style="margin:5px 0 50px; ">
+                    <a class="#" href="/doctor/<%= currentUser._id %>/appointment"><button class="btn btn-primary btn-change" style="margin-left: 50px;">View Upcoming Appointments</button></a>
+                </li>
+            </ul>
+        </header>
+
+    </div>
+
+-->
 <%- include("../partials/footer.ejs") %>

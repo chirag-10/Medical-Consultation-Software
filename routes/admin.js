@@ -17,6 +17,10 @@ router.get("/new", middleware.isLoggedIn, middleware.isAdmin, function(req, res)
   res.render("./admin/new");
 });
 
+router.get("/", middleware.isLoggedIn, middleware.isAdmin, function(req,res){
+  res.render("./admin/index")
+});
+
 router.post("/", middleware.isLoggedIn, middleware.isAdmin, function(req, res){
 	var newAdmin = new Admin({name:req.body.name, email:req.body.email}) ;
 	newAdmin.save();

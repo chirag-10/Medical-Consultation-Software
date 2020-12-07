@@ -25,15 +25,15 @@ router.get("/", middleware.isLoggedIn, middleware.isDoctor, function(req,res){
 	});
 });
 
-router.get("/:id", middleware.isLoggedIn, function(req,res){
-	Doctor.findById(req.params.id).exec(function(err, doctor){
-		if(err){
-			console.log(err);
-		}
-		else{
-			res.render("./doctor/show" ,{doctor:doctor});
-		}
-	});
+
+router.get("/:id",middleware.isLoggedIn , function(req, res){
+  Doctor.findById(req.params.id, function(err, doctor){
+      if(err){
+          console.log(err);
+          return res.redirect("/patient");
+      }
+      res.render("./doctor/show", {doctor : doctor});
+  });
 });
 
 router.post('/new', middleware.isLoggedIn, middleware.isAdmin, (req,res,next)=>{

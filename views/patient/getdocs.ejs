@@ -1,15 +1,21 @@
 <%- include("../partials/header.ejs") %>
 
 <div class="container">
-    <header class="jumbotron">
-        <div class="container">
-            <h1> Welcome to SHCS </h1>
-        </div>
-    </header>
     <h1>Doctor List</h1>
-    <% doctors.forEach(function(doctor){ %>
-        <a href="/doctor/<%= doctor._id %>"><%= doctor.name %></a></br>
-    <% }) %>
+    <table style="width:100%">
+        <tr>
+          <th style="text-align: center;">Name </th>
+          <th>Address</th>
+          <th>Speclization</th>
+        </tr>
+        <% doctors.forEach(function(doctor){ %>
+        <tr>
+            <td><a href="/doctor/<%= doctor._id %>"><%= doctor.name %></a></td>
+            <td><%= doctor.address %></td>
+            <td>Speclization</td>
+        </tr>
+        <% }) %>
+      </table>
     </br>
     <a href="/patient">Go Back</a>
 </div>

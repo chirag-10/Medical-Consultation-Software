@@ -1,24 +1,64 @@
-<%- include('../partials/header.ejs')  %>
-
+<%- include("../partials/header.ejs") %>
+	
 	<div class="container">
-		<header class="jumbotron">
+		<header class="jumbotron" style="background-image: url('../images/cover_aboutus.jpg');">
 			<div class="container">
-				<h1> Welcome to SHCS </h1>
+				<h1 style="text-align: center;"> Welcome to SHCS </h1>
 			</div>
+			<ul class="navbar-nav text-white" style="list-style-type:none;">
+                <li class="nav-item items" style="margin:5px 0 50px; ">
+                    <a href="/patient/<%= patient._id %>/edit"><button class="btn btn-success btn-change" style="margin-left: 240px;">Edit Profile</button></a>
+                </li>
+                <li class="nav-item items " style="margin:5px 0 50px; " >
+                    <a href="/patient/<%= patient._id %>"><button class="btn btn-info btn-change" style="margin-left: 50px;" >Medical History</button></a>
+                </li>
+                <li class="nav-item items" style="margin:5px 0 50px; ">
+                    <a href="/patient/<%= patient._id %>/appointment/"><button class="btn btn-primary btn-change" style="margin-left: 50px;">View Appointments</button></a>
+                </li>
+            </ul>
 		</header>
-		
-		<div class="row text-center" style="display:flex; flex:wrap; ">
-
-				<%= patient.name %></br>
-				<%= patient._id %></br>
-				role : 
-				<%= currentUser.role %>
+	
+		<div style="display:flex; flex:wrap; ">
+			<br>
 		</div>
-		<a href="/patient/getdocs"> View Doctors</a></br>
-		<a href="/patient/<%= patient._id %>"> Medical History </a></br>
-		<a href="/patient/<%= patient._id %>/edit">Edit Profile</a></br>
-		<a href="/patient/<%= patient._id %>/appointment/new">Book new Appointment</a></br>
-		<a href="/patient/<%= patient._id %>/appointment/">View Appointments</a></br>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12 mt-3">
+					<div class="card">
+						<div class="card-horizontal">
+							<div class="img-square-wrapper">
+								<img class="" src="../images/doc_avtar.jpg" alt="Card image cap">
+							</div>
+							<div class="card-body">
+								<h4 class="card-title" >Find Doctors</h4>
+								<p class="card-text"> Select prefferred doctor and time slot to book an appointment.</p>
+								<a href="/patient/getdocs" class="btn btn-primary"> Find Doctors Now</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12 mt-3">
+					<div class="card">
+						<div class="card-horizontal">
+							<div class="img-square-wrapper">
+								<img class="" src="../images/doc_avtar.jpg" alt="Card image cap">
+							</div>
+							<div class="card-body">
+								<h4 class="card-title">Book Appointment</h4>
+								<p class="card-text"> Book an appointment with doctor.</p>
+								<a href="/patient/<%= patient._id %>/appointment/new" class="btn btn-primary"> Book Appointment</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 	</div>
 <%- include('../partials/footer.ejs') %>
