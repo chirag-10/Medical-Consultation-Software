@@ -62,7 +62,7 @@ router.post("/", middleware.isLoggedIn, function(req,res){
             var newAppointment = new Appointment({patient:req.params.id, doctor:doctor._id , date : req.body.time, description : req.body.description})
             newAppointment.save();
             req.flash("success", "Appointment Booked Successfully");
-            res.redirect("/patient");
+            res.redirect("/index");
         });
     });
 });

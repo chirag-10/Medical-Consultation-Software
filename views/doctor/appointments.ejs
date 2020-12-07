@@ -1,35 +1,44 @@
 <%- include("../partials/header.ejs") %>
 
 <div class="container">
-    <h1>Appointments </h1> </br></br>
-    <% if(prevAppointment.length === 0){ %>
+    <h1>Appointments </h1> </br>
+    <% if(prevAppointment.length === 0  && presAppointment.length === 0 && futureAppointment.length === 0){ %>
         <span>No Appointments Booked </span>
     <% } else { %>
-
-        <h3>Previous Appointments</h3>
-        <% prevAppointment.forEach(function(appointment){ %>
-            Patient : <%= appointment.patient.name %>&nbsp; &nbsp;Date : <%= appointment.date %>&nbsp; &nbsp;Reason : <%= appointment.description %></br>
-        <% }) ; %>
-        </br></br>
+        <% if(presAppointment.length === 0){ %>
+            <h3>Ongoing Appointments</h3>
+            <span>No Ongoing Appointments </span>
+        <% } else { %>
         <h3>Ongoing Appointments</h3>
+        <table style="width:100%">
+            <tr>
+                <th><h3>Patient Name</h3></th>
+                <th><h3>Date</h3></th>
+                <th><h3>Reason</h3></th>
+                <th><h3>Consult</h3></th>
+                <th><h3>Modify</h3></th>
+            </tr>
         <% presAppointment.forEach(function(appointment){ %>
-            Patient : <%= appointment.patient.name %>&nbsp; &nbsp;Date : <%= appointment.date %>&nbsp; &nbsp;Reason : <%= appointment.description %></br>
-            <form  action="/patient/<%= appointment.patient._id %>/appointment/<%= appointment._id %>?_method=DELETE" method="POST">
-                <a class="btn btn-xs btn-primary" href="/chat.html?room=<%= appointment._id %>&username=Dr%20<%= appointment.doctor.name %>">Consult</a>&nbsp;
-                <a class="btn btn-xs btn-warning" href="/patient/<%= appointment.patient._id %>/appointment/<%= appointment._id %>/edit ">Update</a>
-                <button class="btn btn-xs btn-danger">Delete</button>
+            <tr>
+                <td><%= appointment.patient.name %>&nbsp; &nbsp;</td>
+                <td><%= appointment.date %>&nbsp; &nbsp;</td>
+                <td><%= appointment.description %></td>
+                <form  action="/patient/<%= appointment.patient._id %>/appointment/<%= appointment._id %>?_method=DELETE" method="POST">
+                <td><a class="btn btn-xs btn-primary" href="/chat.html?room=<%= appointment._id %>&username=Dr%20<%= appointment.doctor.name %>">Consult</a>&nbsp;</td>
+                <td><a class="btn btn-xs btn-warning" href="/patient/<%= appointment.patient._id %>/appointment/<%= appointment._id %>/edit ">Update</a><br>
+                <button class="btn btn-xs btn-danger">Delete</button><br><br></td>
             </form>
-        </br></br>
+        </tr>
         <% }) ; %>
+        </table>
+        <% } %>
+        <br><br>
+
+        <% if(futureAppointment.length === 0){ %>
+            <h3>Upcoming Appointments</h3>
+            <span>No Upcoming Appointments</span>
+        <% } else { %>
         <h3>Upcoming Appointments</h3>
-        <% futureAppointment.forEach(function(appointment){ %>
-            Patient : <%= appointment.patient.name %>&nbsp; &nbsp;Date : <%= appointment.date %>&nbsp; &nbsp;Reason : <%= appointment.description %></br>
-        <form  action="/patient/<%= appointment.patient %>/appointment/<%= appointment._id %>?_method=DELETE" method="POST">
-            <a class="btn btn-xs btn-warning" href="/patient/<%= appointment.patient %>/appointment/<%= appointment._id %>/edit ">Update</a>
-            <button class="btn btn-xs btn-danger">Delete</button>
-        </form>
-        <% }) ; %>
-<!--
         <table style="width:100%">
             <tr>
                 <th><h3>Patient Name</h3></th>
@@ -37,23 +46,47 @@
                 <th><h3>Reason</h3></th>
                 <th><h3>Modify</h3></th>
             </tr>
-        <% appointments.forEach(function(appointment){ %>
+        <% futureAppointment.forEach(function(appointment){ %>
             <tr>
-                <th><%= appointment.patient.name %>&nbsp; &nbsp;</th>
-                <th><%= appointment.date %>&nbsp; &nbsp;</th>
-                <th><%= appointment.description %></th>
-                <th><br><a class="btn btn-xs btn-warning" href="/patient/<%= appointment.patient._id%>/appointment/<%= appointment._id %>/edit ">Update</a><br>
+                <td><%= appointment.patient.name %>&nbsp; &nbsp;</td>
+                <td><%= appointment.date %>&nbsp; &nbsp;</td>
+                <td><%= appointment.description %></td>
+                <td><br><a class="btn btn-xs btn-warning" href="/patient/<%= appointment.patient._id%>/appointment/<%= appointment._id %>/edit ">Update</a><br>
                 <form  action="/patient/<%= appointment.patient._id %>/appointment/<%= appointment._id %>?_method=DELETE" method="POST">
-                <button class="btn btn-xs btn-danger">Delete</button>
-        </form>
-        </br></br>
-        <% }) %>
-        </tr>
+                <button class="btn btn-xs btn-danger">Delete</button></td>
+            </form>
+            </tr>
+        <% }); %>
         </table>
+        <% } %>
+        <br><br>
 
+
+        <% if(prevAppointment.length === 0){ %>
+            <h3>Previous Appointments</h3>
+            <span>No Previous Appointments </span>
+        <% } else { %>
+        <h3>Previous Appointments</h3>
+        <table style="width:100%">
+            <tr>
+                <th><h3>Patient Name</h3></th>
+                <th><h3>Date</h3></th>
+                <th><h3>Reason</h3></th>
+            </tr>
+        <% prevAppointment.forEach(function(appointment){ %>
+            <tr>
+                <td><%= appointment.patient.name %>&nbsp; &nbsp;</td>
+                <td><%= appointment.date %>&nbsp; &nbsp;</td>
+                <td><%= appointment.description %></td>
+            </form>
+            </tr>
+        <% }); %>
+        </table>
+        <% } %>
+        
     <% } %>
-    -->
-    </br></br>
+
+   <br><br>
     <a href="/doctor">Back to Dashboard</a>
 
 </div>

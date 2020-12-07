@@ -4,23 +4,6 @@
     <div class="container">
         <header class="jumbotron" style="background-image: url('../images/cover_aboutus.jpg');">
 			<div class="container">
-
-				<h1> Welcome to SHCS </h1>
-			</div>
-		</header>
-        <h1>Welcome Doctor </h1>
-        <a class="#" href="/doctor/<%= currentUser._id %>/appointment">View Appointment </a></br></br>
-        <div class="row text-center" style="display:flex; flex:wrap; ">
-
-            <%= doctor.name %></br>
-            <%= doctor._id %></br>
-            role : 
-            <%= currentUser.role %>
-        </div>
-        <a href="/doctor/<%= doctor._id %>">View Profile</a>
-        <a href="/doctor/<%= doctor._id %>/edit">Edit Profile</a>
-    </div>
-<!--
 				<h1 style="text-align: center;"> Welcome to SHCS </h1>
             </div>
             <ul class="navbar-nav text-white" style="list-style-type:none;">
@@ -31,12 +14,13 @@
                     <a href="/doctor/<%= doctor._id %>"><button class="btn btn-info btn-change" style="margin-left: 50px;" >View Profile</button></a>
                 </li>
                 <li class="nav-item items" style="margin:5px 0 50px; ">
-                    <a class="#" href="/doctor/<%= currentUser._id %>/appointment"><button class="btn btn-primary btn-change" style="margin-left: 50px;">View Upcoming Appointments</button></a>
+                    <a class="#" href="/doctor/<%= currentUser._id %>/appointment"><button class="btn btn-primary btn-change" style="margin-left: 50px;">View Appointments</button></a>
                 </li>
             </ul>
         </header>
+        
+        <br>
+        <h1>Welcome Doctor <%= doctor.name%></h1>
 
-    </div>
-
--->
+    
 <%- include("../partials/footer.ejs") %>
