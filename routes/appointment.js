@@ -11,7 +11,12 @@ var express     = require("express"),
 
 //new Appointment
 router.get("/new", middleware.isLoggedIn, function(req,res){
-    res.render("./appointment/new", {patient_id : req.params.id});
+    Doctor.find({}, function(err, allDoctors){
+        if(err){
+            return res.render("/patient");
+        }
+        res.render("./appointment/new", {patient_id : req.params.id, doctors:allDoctors});
+    });
 });    
 
 router.get("/new/:doctor_id", function(req, res){
@@ -25,9 +30,9 @@ router.get("/new/:doctor_id", function(req, res){
             console.log(err);
             return res.redirect("./patient"); 
             }
-            Doctor.findById(req.params.doctor_id, function(err, doctor){
+            Doctor.findById(req.params.doctor_id, function(err1, doctor){
                 if(err){
-                    req.flash("error", err.message);
+                    req.flash("error", err1.message);
                     return res.redirect("/patient");
                 }
                 res.render("./appointment/doctor", {doctor:doctor, patient_id : patient._id});
@@ -49,7 +54,7 @@ router.post("/", middleware.isLoggedIn, function(req,res){
             return res.redirect('/patient');
         }
         Doctor.findOne({name:req.body.name}, function(error,doctor){
-            if(error || doctor.length === 0){
+            if(error){
                 console.log(error);
                 req.flash("error", "Doctor not found");
                 return res.redirect("/patient");
@@ -65,12 +70,33 @@ router.post("/", middleware.isLoggedIn, function(req,res){
 
 //all Appointments
 router.get("/", middleware.isLoggedIn, function(req, res){
-    Appointment.find({patient:req.params.id}).populate("doctor").exec(function(err, allAppointments){
+    Appointment.find({patient:req.params.id}).populate("doctor").populate("patient").exec(function(err, allAppointments){
         if(err){
             console.log(err);
             return res.redirect("/patient");
         }
-        res.render("./appointment/view", {appointments:allAppointments});
+        var date = new Date(),
+            addDate = new Date()
+        date = date.setMinutes(date.getMinutes() - 30);
+        addDate = addDate.setMinutes(addDate.getMinutes() + 30);
+        var prevAppointment = [];
+        var presAppointment = [];
+        var futureAppointment = [];
+        allAppointments.forEach(function(appointment){
+            if(appointment.date.getTime() < date){
+                prevAppointment.push(appointment);
+            }                
+            else if(appointment.date.getTime() < addDate){
+                presAppointment.push(appointment);
+            }
+            else{
+                futureAppointment.push(appointment);
+            }
+        });
+        prevAppointment.sort((a,b) => (a.date > b.date)? 1:-1);
+        presAppointment.sort((a,b) => (a.date > b.date)? 1:-1);
+        futureAppointment.sort((a,b) => (a.date > b.date)? 1:-1);
+        res.render("./appointment/view", {prevAppointment:prevAppointment, presAppointment:presAppointment, futureAppointment:futureAppointment});
     });
 });
 

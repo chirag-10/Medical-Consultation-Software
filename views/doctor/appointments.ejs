@@ -2,9 +2,34 @@
 
 <div class="container">
     <h1>Appointments </h1> </br></br>
-    <% if(appointments.length === 0){ %>
+    <% if(prevAppointment.length === 0){ %>
         <span>No Appointments Booked </span>
     <% } else { %>
+
+        <h3>Previous Appointments</h3>
+        <% prevAppointment.forEach(function(appointment){ %>
+            Patient : <%= appointment.patient.name %>&nbsp; &nbsp;Date : <%= appointment.date %>&nbsp; &nbsp;Reason : <%= appointment.description %></br>
+        <% }) ; %>
+        </br></br>
+        <h3>Ongoing Appointments</h3>
+        <% presAppointment.forEach(function(appointment){ %>
+            Patient : <%= appointment.patient.name %>&nbsp; &nbsp;Date : <%= appointment.date %>&nbsp; &nbsp;Reason : <%= appointment.description %></br>
+            <form  action="/patient/<%= appointment.patient._id %>/appointment/<%= appointment._id %>?_method=DELETE" method="POST">
+                <a class="btn btn-xs btn-primary" href="/chat.html?room=<%= appointment._id %>&username=Dr%20<%= appointment.doctor.name %>">Consult</a>&nbsp;
+                <a class="btn btn-xs btn-warning" href="/patient/<%= appointment.patient._id %>/appointment/<%= appointment._id %>/edit ">Update</a>
+                <button class="btn btn-xs btn-danger">Delete</button>
+            </form>
+        </br></br>
+        <% }) ; %>
+        <h3>Upcoming Appointments</h3>
+        <% futureAppointment.forEach(function(appointment){ %>
+            Patient : <%= appointment.patient.name %>&nbsp; &nbsp;Date : <%= appointment.date %>&nbsp; &nbsp;Reason : <%= appointment.description %></br>
+        <form  action="/patient/<%= appointment.patient %>/appointment/<%= appointment._id %>?_method=DELETE" method="POST">
+            <a class="btn btn-xs btn-warning" href="/patient/<%= appointment.patient %>/appointment/<%= appointment._id %>/edit ">Update</a>
+            <button class="btn btn-xs btn-danger">Delete</button>
+        </form>
+        <% }) ; %>
+<!--
         <table style="width:100%">
             <tr>
                 <th><h3>Patient Name</h3></th>
@@ -25,7 +50,9 @@
         <% }) %>
         </tr>
         </table>
+
     <% } %>
+    -->
     </br></br>
     <a href="/doctor">Back to Dashboard</a>
 
