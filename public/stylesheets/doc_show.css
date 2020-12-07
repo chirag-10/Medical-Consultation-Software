@@ -4,8 +4,3 @@
     height: 200px;
     border-radius: 200%;
   }
-
-  table, th, td {
-    border: 1px solid black;
-    text-align: center;
-  }

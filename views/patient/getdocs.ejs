@@ -4,15 +4,15 @@
     <h1>Doctor List</h1>
     <table style="width:100%">
         <tr>
-          <th style="text-align: center;">Name </th>
-          <th>Address</th>
-          <th>Speclization</th>
+          <th><h3>Name</h3></th>
+          <th><h3>Address</h3></th>
+          <th><h3>Speclization</h3></th>
         </tr>
         <% doctors.forEach(function(doctor){ %>
         <tr>
-            <td><a href="/doctor/<%= doctor._id %>"><%= doctor.name %></a></td>
+            <td  style="height: 30px;"><a href="/doctor/<%= doctor._id %>"><%= doctor.name %></a></td>
             <td><%= doctor.address %></td>
-            <td>Speclization</td>
+            <td><%= doctor.degree %></td>
         </tr>
         <% }) %>
       </table>

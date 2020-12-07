@@ -1,29 +1,14 @@
 <%- include("../partials/header.ejs") %>
-<!--
-    <div class="container">
-        <header class="jumbotron">
-			<div class="container">
-				<h1> Welcome to SHCS </h1>
-			</div>
-		</header>
-        <h1><%= doctor.name %></h1>
-        Email   :        <%= doctor.email %></br>
-        Address :        <%= doctor.address %></br>
-        Contact :        <%= doctor.phone %></br>
-        Qualification:   <%= doctor.degree %></br>
-        Remark  :        <%= doctor.remark %></br>
-        <% if(currentUser.role == 1){ %>
-        <a class="btn btn-sm btn-primary " href="/patient/<%= currentUser._id %>/appointment/new/<%= doctor._id %>">Book Appointment </a></br></br>
-        <% } %>
-        <a href="/doctor">Go Back</a>
 
--->
 <div class="container">
     <div class="container target">
         <div class="row">
             <div class="col-sm-10">
                 <h1>Dr. <%= doctor.name %></h1>
-                 <a class="btn btn-success" href="#">Book Appointment </a>
+                <% if(currentUser.role == 1){ %>
+                    <a class="btn btn-success" href="/patient/<%= currentUser._id %>/appointment/new/<%= doctor._id %>">Book Appointment </a>
+                <%} %>
+                 
             </div>
           <div class="col-sm-2"><img src="../images/doc_avtar.jpg" alt="Avatar" class="avatar"></div>
         </div>
@@ -34,13 +19,14 @@
                     <li class="list-group-item text-right"><span class="pull-left"><strong class="">Name: </strong></span> <%= doctor.name %></li>
                     <li class="list-group-item text-right"><span class="pull-left"><strong class="">Medical License Number: </strong></span> 11</li>
                     <li class="list-group-item text-right"><span class="pull-left"><strong class="">Address: </strong></span><%= doctor.address %></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Email: </strong></span> <%= doctor.email %></li>
+                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Speclization: </strong></span><%= doctor.degree %></li>
                     <li class="list-group-item text-muted" contenteditable="false">Contact Details</li>
+                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Email: </strong></span> <%= doctor.email %></li>
                     <li class="list-group-item text-right"><span class="pull-left"><strong class="">Cellphone Number: </strong></span><%= doctor.phone %></li>
                 </ul>
             </div>
         </div>
-    <a href="/doctor">Go Back</a>
+    <a href="/index">Go to Dashboard</a>
     </div>
 </div>
 <%- include("../partials/footer.ejs") %>
