@@ -1,28 +1,50 @@
 <%- include("partials/header.ejs") %>
 
-
-<div class="container">
-    <div class="row">
-        <h1 style="text-align: center">Login !!</h1>
-        <div style="width: 30%; margin: 25px auto;">
+<body class="text-gray-500 bg-gray-900 body-font">
+    <section class="text-gray-500 bg-gray-900 body-font">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col text-center w-full mb-12">
+                <h1 class="sm:text-6xl text-6xl font-medium title-font mb-4 text-white"> Login </h1>
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-3xl"> Log in with your credentials to use our
+                    System. If you are new here, Register with us first.</p>
+            </div>
             <form action="/login" method="POST">
-                <div class="form-group">
-                    <input class="form-control" type="text" name="username" placeholder="username">
+                <div class="lg:w-1/2 md:w-2/3 mx-auto">
+                    <div class="flex flex-wrap -m-2">
+
+                        <div class="p-2 w-1/2">
+                            <div class="relative form-group">
+                                <label for="name" class="leading-7 text-3xl text-gray-400"> Username </label>
+                                <input type="text" name="username" placeholder="example@shcs.com"
+                                    class="w-full bg-gray-800 rounded border border-gray-700 focus:border-indigo-500 text-base outline-none text-gray-100 py-3 px-3 leading-8 transition-colors duration-200 ease-in-out text-3xl form-control">
+                            </div>
+                        </div>
+                        <div class="p-2 w-1/2">
+                            <div class="relative form-group">
+                                <label for="email" class="leading-7 text-3xl text-gray-400"> Password </label>
+                                <input type="password" name="password" placeholder="Password"
+                                    class="w-full bg-gray-800 rounded border border-gray-700 focus:border-indigo-500 text-base outline-none text-gray-100 py-3 px-3 leading-8 transition-colors duration-200 ease-in-out text-3xl form-control">
+                            </div>
+                        </div>
+                        <div class="p-2 w-full">
+                            <button
+                                class="flex mx-auto text-white bg-indigo-500 border-0 py-4 px-8 focus:outline-none hover:bg-indigo-600 rounded text-4xl">
+                                Login </button>
+                        </div>
+                        <div class="p-2 w-full pt-8 mt-8 border-t border-gray-800 text-center">
+                            <a class="text-indigo-500" href="change_pass"> Change Password </a><br>
+                            <a class="text-indigo-500" href="/"> Go Back </a>
+                            <p class="leading-normal my-10">PCCoE
+                                <br>Nigdi, Pune
+                            </p>
+                            
+                        </div>
+
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input class="form-control" type="password" name="password" placeholder="password">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block">Login!</button>
-                </div>
-                <a href="change_pass">Change Password</a>
             </form>
-            <a href="/">Go Back</a>
         </div>
-    </div>
-</div>
-
-
-
+    </section>
+</body>
 
 <%- include("partials/footer.ejs") %>

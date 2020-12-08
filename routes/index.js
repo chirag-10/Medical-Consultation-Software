@@ -51,7 +51,7 @@ router.post("/register", function(req, res){
 		}
 	});
 	
-	//res.redirect("/login")
+	res.redirect("/login")
 	
 });
 
