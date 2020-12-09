@@ -22,9 +22,13 @@
     </div>
     
     <div id="landing-header">
- 		<h1 style="color:gold;">Smart Health Consultation System</h1>
+         <h1 style="color:gold;">Smart Health Consultation System</h1>
+         <% if (currentUser){ %>
+            <a href="/index" class="btn btn-lg btn-warning">Dashboard</a>
+        <% } else { %>
         <a href="/login" class="btn btn-lg btn-warning">Login</a>
         <a href="/register" class="btn btn-lg btn-warning">Register</a>
+        <% } %>
     </div>
     
     <ul class="slideshow">
