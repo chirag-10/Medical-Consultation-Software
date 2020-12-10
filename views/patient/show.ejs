@@ -263,48 +263,4 @@
         </div>
     </section>
 
-
-    <!-- <div class="container">
-        <header class="jumbotron" style="background-image: url('../images/cover_aboutus.jpg');">
-            <div class="container">
-                <h1> Welcome to SHCS </h1>
-            </div>
-            <% if(!patient.medical_record){ %>
-            <a class="btn btn-sm btn-primary" href="/patient/<%= patient._id %>/MedicalRecords/new">Add Medical
-                Record</a>
-            <% } else { %>
-            <form id="delete-form"
-                action="/patient/<%= patient._id %>/MedicalRecords/<%= patient.medical_record._id %>?_method=DELETE"
-                method="POST">
-                <a class="btn btn-sm btn-warning"
-                    href="/patient/<%= patient._id %>/MedicalRecords/<%= patient.medical_record._id %>/edit">Update
-                    Record</a>
-                <button class="btn btn-sm btn-danger">Delete Record</button>
-            </form>
-            <% } %>
-        </header>
-    </div>
-
-    <div class="container">
-        <h1> Medical Records </h1>
-        <% if(patient.medical_record){ %>
-        Name :<%= patient.medical_record.name %></br>
-        Age :<%= patient.medical_record.age %></br>
-        Blood_Group :<%= patient.medical_record.blood_group %></br>
-        Gender :<%= patient.medical_record.gender %></br>
-        Height :<%= patient.medical_record.height %> ft</br>
-        Weight :<%= patient.medical_record.weight %> kg</br>
-        Sugar :<%= patient.medical_record.sugar %> mg/dL</br>
-        BP :<%= patient.medical_record.bp %></br>
-        <% } else { %>
-        No Record Found
-        <% } %>
-        <br><br>
-        <a href="/patient">Back to Dashboard </a>
-    </div> -->
-
-
-
-
-
     <% include("../partials/footer.ejs") %>
