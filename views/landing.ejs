@@ -4,6 +4,7 @@
         <title>SHCS</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="/stylesheets/landing.css">
+        <link rel="stylesheet" href="/build/tailwind.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
     </head>
     <body>
@@ -22,9 +23,13 @@
     </div>
     
     <div id="landing-header">
- 		<h1 style="color:gold;">Smart Health Consultation System</h1>
-        <a href="/login" class="btn btn-lg btn-warning">Login</a>
-        <a href="/register" class="btn btn-lg btn-warning">Register</a>
+         <h1 style="color:gold;">Smart Health Consultation System</h1>
+         <% if (currentUser){ %>
+            <a href="/index" class="btn btn-lg btn-warning">Dashboard</a>
+        <% } else { %>
+        <a href="/login" class="btn btn-lg text-white bg-yellow-600 hover:bg-yellow-700"> Login </a>
+        <a href="/register" class="btn btn-lg text-white bg-yellow-600 hover:bg-yellow-700"> Register </a>
+        <% } %>
     </div>
     
     <ul class="slideshow">
